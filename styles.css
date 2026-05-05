@@ -10899,3 +10899,302 @@ svg {
     -webkit-backdrop-filter: blur(8px) !important;
   }
 }
+
+/* =========================================================
+   FINAL FIXES 3
+   - Hero heading 3-line lock (real fix - parent .hero-copy widened)
+   - #offers cards: 4 / 2 / 1 column responsive scale
+   - Logo bigger across breakpoints
+   ========================================================= */
+
+/* ---- 1. HERO HEADING -- exactly 3 lines on desktop ----
+   The previous attempt was overridden because the parent .hero-copy
+   was capped at 620px. We widen .hero-copy and tune the h1 font-size
+   so that "Advanced Aesthetic Care" fits on a single line. */
+
+@media (min-width: 1100px) {
+  .hero-copy {
+    width: 100% !important;
+    max-width: 840px !important;
+  }
+
+  .hero h1 {
+    width: auto !important;
+    max-width: 820px !important;
+    font-size: clamp(52px, 4.4vw, 64px) !important;
+    line-height: 1.06 !important;
+    letter-spacing: -.018em !important;
+    text-wrap: balance;
+    white-space: normal !important;
+  }
+
+  /* Manual <br> stays a real break. <i>'Confidence' takes its own line. */
+  .hero h1 br { display: block !important; }
+  .hero h1 i  {
+    display: block !important;
+    margin-top: 4px !important;
+    white-space: normal !important;
+  }
+}
+
+/* Smaller laptops / large tablets: same 3-line pattern, smaller font. */
+@media (min-width: 769px) and (max-width: 1099px) {
+  .hero-copy {
+    width: 100% !important;
+    max-width: 720px !important;
+  }
+
+  .hero h1 {
+    width: auto !important;
+    max-width: 720px !important;
+    font-size: clamp(44px, 5.2vw, 54px) !important;
+    line-height: 1.08 !important;
+    letter-spacing: -.016em !important;
+    text-wrap: balance;
+    white-space: normal !important;
+  }
+
+  .hero h1 br { display: block !important; }
+  .hero h1 i  {
+    display: block !important;
+    margin-top: 3px !important;
+    white-space: normal !important;
+  }
+}
+
+/* Tablet portrait. */
+@media (min-width: 561px) and (max-width: 768px) {
+  .hero-copy {
+    width: 100% !important;
+    max-width: 640px !important;
+  }
+
+  .hero h1 {
+    width: auto !important;
+    max-width: 640px !important;
+    font-size: clamp(38px, 6vw, 50px) !important;
+    line-height: 1.1 !important;
+    letter-spacing: -.014em !important;
+    text-wrap: balance;
+  }
+
+  .hero h1 br { display: block !important; }
+  .hero h1 i  { display: block !important; margin-top: 2px !important; }
+}
+
+/* Phones - allow natural wrap, but keep 3 lines via the manual <br>
+   and the block <i>. Font scales but stays >= 28px so it reads. */
+@media (max-width: 560px) {
+  .hero-copy {
+    max-width: 100% !important;
+    width: 100% !important;
+  }
+
+  .hero h1 {
+    width: auto !important;
+    max-width: 100% !important;
+    font-size: clamp(30px, 9vw, 42px) !important;
+    line-height: 1.12 !important;
+    letter-spacing: -.012em !important;
+    text-wrap: balance;
+  }
+
+  .hero h1 br { display: block !important; }
+  .hero h1 i  { display: block !important; margin-top: 2px !important; }
+}
+
+/* Z Fold / 280px range - keep readable, allow natural wrap. */
+@media (max-width: 320px) {
+  .hero h1 {
+    font-size: clamp(24px, 9vw, 30px) !important;
+    line-height: 1.16 !important;
+  }
+  .hero h1 br { display: block !important; }
+  .hero h1 i  { display: block !important; margin-top: 2px !important; }
+}
+
+/* ---- 2. #OFFERS SERVICE CARDS - 4 / 2 / 1 column scale ----
+   Replace the old 4 / 3 / 2 / 1 chain with a cleaner three-step
+   responsive layout. Higher-specificity selector + !important so it
+   beats the existing rules at lines 7410+. */
+
+/* Big desktop : 4 cards in a row. */
+@media (min-width: 1100px) {
+  #offers .product-row {
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    gap: 22px !important;
+  }
+}
+
+/* Medium / small desktop & tablet : 2 cards in a row. */
+@media (min-width: 720px) and (max-width: 1099px) {
+  #offers .product-row {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 22px !important;
+  }
+  #offers .product-img { height: 200px !important; }
+  #offers .product-row article { padding: 14px !important; }
+}
+
+/* Large mobile (most phones in portrait, 480-719) : 2 cards in a row.
+   This is the breakpoint the user asked for: cards stay 2-up but the
+   pill buttons stack vertically inside each card so they don't get
+   cramped at narrow widths. */
+@media (min-width: 480px) and (max-width: 719px) {
+  #offers .product-row {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 14px !important;
+  }
+  #offers .product-row article {
+    padding: 12px !important;
+    border-radius: 18px !important;
+  }
+  #offers .product-img {
+    height: 150px !important;
+    border-radius: 14px !important;
+    margin-bottom: 12px !important;
+  }
+  #offers .product-row h3 {
+    font-size: 16px !important;
+    min-height: 38px !important;
+    max-height: 38px !important;
+  }
+  #offers .product-row p {
+    font-size: 12.5px !important;
+    min-height: 36px !important;
+    max-height: 36px !important;
+  }
+  #offers .product-actions {
+    grid-template-columns: 1fr !important;
+    gap: 8px !important;
+  }
+  #offers .product-btn,
+  #offers .whatsapp-btn {
+    min-height: 40px !important;
+    height: 40px !important;
+    font-size: 11px !important;
+  }
+}
+
+/* Small mobile and Z Fold front-display : 1 card per row. */
+@media (max-width: 479px) {
+  #offers .product-row {
+    grid-template-columns: 1fr !important;
+    gap: 18px !important;
+  }
+  #offers .product-row article {
+    padding: 14px !important;
+    border-radius: 22px !important;
+  }
+  #offers .product-img {
+    height: 200px !important;
+    border-radius: 16px !important;
+  }
+  #offers .product-row h3 {
+    font-size: 18px !important;
+    min-height: auto !important;
+    max-height: none !important;
+  }
+  #offers .product-row p {
+    font-size: 13.5px !important;
+    min-height: auto !important;
+    max-height: none !important;
+  }
+  #offers .product-actions {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 10px !important;
+  }
+  #offers .product-btn,
+  #offers .whatsapp-btn {
+    min-height: 42px !important;
+    height: 42px !important;
+    font-size: 12px !important;
+  }
+}
+
+/* Z Fold folded (~280-340) : 1-up, smaller image. */
+@media (max-width: 340px) {
+  #offers .product-img { height: 168px !important; }
+  #offers .product-row article { padding: 12px !important; border-radius: 18px !important; }
+  #offers .product-row h3 { font-size: 16.5px !important; }
+  #offers .product-actions {
+    grid-template-columns: 1fr !important;
+    gap: 8px !important;
+  }
+  #offers .product-btn,
+  #offers .whatsapp-btn {
+    min-height: 38px !important;
+    height: 38px !important;
+    font-size: 11px !important;
+  }
+}
+
+/* ---- 3. HEADER LOGO -- slightly bigger across breakpoints ----
+   Bump both light and dark logo sizes by ~6-8px each. Caps height
+   AND max-width so the wide PNG never blows out the column. */
+
+.brand-logo {
+  height: 52px !important;
+  max-width: 230px !important;
+  width: auto !important;
+  object-fit: contain !important;
+}
+
+@media (min-width: 1100px) {
+  .brand-logo {
+    height: 56px !important;
+    max-width: 250px !important;
+  }
+}
+
+@media (max-width: 980px) {
+  .brand-logo {
+    height: 46px !important;
+    max-width: 200px !important;
+  }
+}
+
+@media (max-width: 540px) {
+  .brand-logo {
+    height: 40px !important;
+    max-width: 178px !important;
+  }
+}
+
+@media (max-width: 360px) {
+  .brand-logo {
+    height: 36px !important;
+    max-width: 156px !important;
+  }
+}
+
+@media (max-width: 300px) {
+  .brand-logo {
+    height: 30px !important;
+    max-width: 130px !important;
+  }
+}
+
+/* Header shell tightens to fit the bigger logo on small screens. */
+@media (max-width: 980px) {
+  .header-shell {
+    height: 64px !important;
+    grid-template-columns: 1fr auto !important;
+    gap: 12px !important;
+  }
+  .mobile-panel { top: 64px !important; max-height: calc(100svh - 64px) !important; }
+}
+
+@media (max-width: 540px) {
+  .header-shell {
+    height: 60px !important;
+  }
+  .mobile-panel { top: 60px !important; max-height: calc(100svh - 60px) !important; }
+}
+
+@media (max-width: 360px) {
+  .header-shell {
+    height: 56px !important;
+  }
+  .mobile-panel { top: 56px !important; max-height: calc(100svh - 56px) !important; }
+}
