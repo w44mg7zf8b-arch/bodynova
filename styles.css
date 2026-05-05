@@ -10574,3 +10574,328 @@ svg {
     font-size: 18px !important;
   }
 }
+
+/* =========================================================
+   FINAL FIXES 2
+   - Hero 3-line lock on desktop
+   - Two-logo swap system (light/dark)
+   - Dark-section text contrast (override global !important h2)
+   - WhatsApp icon visibility on offers cards
+   ========================================================= */
+
+/* ---- 1. HOMEPAGE HERO HEADING -- exactly 3 lines on desktop ----
+   The HTML is:
+     <h1>Advanced Aesthetic Care<br>for Skin & Body <i>Confidence</i></h1>
+   We want:
+     line 1: 'Advanced Aesthetic Care'   (before the <br>)
+     line 2: 'for Skin & Body'           (text node after the <br>)
+     line 3: 'Confidence'                (the italic <i>)
+
+   To force line 3 we make the <i> a block element, and we cap the h1
+   width so the second-line wrap stays clean. */
+@media (min-width: 769px) {
+  .hero h1 {
+    width: auto !important;
+    max-width: 760px !important;
+    font-size: clamp(48px, 5.4vw, 72px) !important;
+    line-height: 1.06 !important;
+    letter-spacing: -.02em !important;
+    text-wrap: balance;
+  }
+
+  .hero h1 br {
+    display: block !important;
+  }
+
+  /* Force 'Confidence' onto its own line by making <i> a block. */
+  .hero h1 i {
+    display: block !important;
+    margin-top: 2px !important;
+  }
+}
+
+/* Tablet — two-line heading is OK but keep the italic on its own
+   line for editorial rhythm. */
+@media (min-width: 561px) and (max-width: 768px) {
+  .hero h1 {
+    width: auto !important;
+    max-width: 640px !important;
+    font-size: clamp(40px, 6.6vw, 56px) !important;
+    line-height: 1.08 !important;
+    letter-spacing: -.02em !important;
+  }
+
+  .hero h1 br {
+    display: block !important;
+  }
+
+  .hero h1 i {
+    display: block !important;
+    margin-top: 2px !important;
+  }
+}
+
+/* Phones — let it wrap naturally, but keep <br> visible so 'for Skin
+   & Body' starts a new line, and the italic still gets a fresh line. */
+@media (max-width: 560px) {
+  .hero h1 {
+    width: auto !important;
+    max-width: 100% !important;
+    font-size: clamp(32px, 9vw, 44px) !important;
+    line-height: 1.1 !important;
+    letter-spacing: -.015em !important;
+  }
+
+  .hero h1 br {
+    display: block !important;
+  }
+
+  .hero h1 i {
+    display: block !important;
+    margin-top: 2px !important;
+  }
+}
+
+/* ---- 2. TWO-LOGO SYSTEM ----
+   Both <img> tags live in the brand link. Default: only the LIGHT logo
+   is visible (used over the transparent dark hero). When the header
+   gets `is-scrolled`, fade to the DARK logo. On mobile (<=980px) the
+   header bar is forced opaque white in existing CSS, so we always
+   show the dark logo there. */
+.brand {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.brand-logo {
+  display: block;
+  transition: opacity .35s ease;
+}
+
+/* Stack the two PNGs on top of each other; only one is visible at a time. */
+.brand-logo-dark {
+  position: absolute;
+  inset: 0;
+  margin: auto 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.brand-logo-light {
+  opacity: 1;
+}
+
+/* Scrolled (white sticky bar): dark logo visible, light hidden. */
+.site-header.is-scrolled .brand-logo-light { opacity: 0; }
+.site-header.is-scrolled .brand-logo-dark  { opacity: 1; }
+
+/* Mobile / small screens: header is permanently white -> dark logo. */
+@media (max-width: 980px) {
+  .brand-logo-light { opacity: 0 !important; }
+  .brand-logo-dark  { opacity: 1 !important; }
+}
+
+/* Override the legacy .brand-logo filters from the older FINAL FIXES
+   block: with two distinct PNGs we don't need any filter pipeline. */
+.site-header .brand-logo,
+.site-header.is-scrolled .brand-logo,
+.site-header:not(.is-scrolled) .brand-logo,
+.site-header.is-transparent .brand-logo {
+  filter: none !important;
+}
+
+/* Reduce-motion users: skip the cross-fade. */
+@media (prefers-reduced-motion: reduce) {
+  .brand-logo { transition: none !important; }
+}
+
+/* ---- 3. DARK-SECTION TEXT CONTRAST ----
+   Around line ~5967 there is a global rule:
+     h2, h2 i, ... { color: var(--ink) !important; }
+   That rule wins over our scoped white-on-dark rules because of
+   `!important`. Re-state every dark-section heading / subheading /
+   body / icon color with `!important` so the cascade resolves to
+   visible text on the dark gradient. */
+
+/* About > Stats (dark teal gradient) */
+.about-page .about-stats-copy h2,
+.about-page .about-stats-copy h2 i {
+  color: #fff !important;
+}
+.about-page .about-stats-copy h2 i {
+  color: var(--accent-gold) !important;
+}
+.about-page .about-stats-copy p {
+  color: rgba(255, 255, 255, .82) !important;
+}
+.about-page .about-stat-num,
+.about-page .about-stat-num em {
+  color: var(--accent-gold) !important;
+}
+.about-page .about-stat-label {
+  color: rgba(255, 255, 255, .82) !important;
+}
+
+/* About > Cinematic strip (image + dark overlay) */
+.about-page .about-cinematic-text {
+  color: #fff !important;
+}
+
+/* About > Hero */
+.about-page .about-hero-title,
+.about-page .about-hero-title i,
+.about-page .about-hero-sub {
+  color: #fff !important;
+}
+.about-page .about-hero-title i {
+  color: var(--accent-gold) !important;
+}
+.about-page .about-hero-sub {
+  color: rgba(255, 255, 255, .92) !important;
+}
+.about-page .about-hero-eyebrow,
+.about-page .about-stats-eyebrow {
+  color: var(--accent-gold) !important;
+}
+
+/* Contact > Hero */
+.contact-page .contact-hero-title,
+.contact-page .contact-hero-title i,
+.contact-page .contact-hero-sub {
+  color: #fff !important;
+}
+.contact-page .contact-hero-title i {
+  color: var(--accent-gold) !important;
+}
+.contact-page .contact-hero-sub {
+  color: rgba(255, 255, 255, .92) !important;
+}
+.contact-page .contact-hero-eyebrow,
+.contact-page .contact-cta-eyebrow {
+  color: var(--accent-gold) !important;
+}
+
+/* Contact > Info panel (dark teal gradient) */
+.contact-page .contact-info-panel h2,
+.contact-page .contact-info-panel h2 i {
+  color: #fff !important;
+}
+.contact-page .contact-info-panel h2 i {
+  color: var(--accent-gold) !important;
+}
+.contact-page .contact-info-lead {
+  color: rgba(255, 255, 255, .85) !important;
+}
+.contact-page .contact-info-label {
+  color: rgba(255, 255, 255, .58) !important;
+}
+.contact-page .contact-info-value {
+  color: #fff !important;
+}
+.contact-page .contact-info-sub {
+  color: rgba(255, 255, 255, .68) !important;
+}
+.contact-page .contact-info-socials-label {
+  color: rgba(255, 255, 255, .58) !important;
+}
+
+/* Contact > CTA strip (image + dark overlay) */
+.contact-page .contact-cta-heading,
+.contact-page .contact-cta-heading i,
+.contact-page .contact-cta-sub {
+  color: #fff !important;
+}
+.contact-page .contact-cta-heading i {
+  color: var(--accent-gold) !important;
+}
+.contact-page .contact-cta-sub {
+  color: rgba(255, 255, 255, .9) !important;
+}
+
+/* Contact > FAQ summary (light, but global rule could over-darken) */
+.contact-page .contact-faq summary {
+  color: var(--ink) !important;
+}
+
+/* ---- 4. WHATSAPP ICON ON OFFERS CARDS ----
+   The card has white background + WhatsApp button (#fff -> hover #f6fbfb).
+   The current rule sets text color to #2d5455 (dark teal). That color
+   is fine for the label, but the SVG should pop in WhatsApp green so
+   the pill reads as a recognizable WhatsApp affordance. */
+#offers .whatsapp-btn {
+  color: #1d7576 !important;
+}
+
+#offers .whatsapp-btn svg {
+  width: 16px !important;
+  height: 16px !important;
+  flex: 0 0 16px !important;
+  display: inline-block !important;
+  color: #25D366 !important;       /* WhatsApp brand green */
+  fill: currentColor !important;
+  transition: color .25s ease, transform .25s ease !important;
+}
+
+#offers .whatsapp-btn:hover {
+  background: #25D366 !important;
+  color: #fff !important;
+  border-color: #1ea954 !important;
+  box-shadow: 0 14px 28px rgba(37, 211, 102, .28) !important;
+}
+
+#offers .whatsapp-btn:hover svg {
+  color: #fff !important;
+  transform: scale(1.05) !important;
+}
+
+#offers .product-btn svg {
+  width: 16px !important;
+  height: 16px !important;
+  flex: 0 0 16px !important;
+}
+
+/* Mobile: keep the WhatsApp icon visible at the smaller pill size. */
+@media (max-width: 540px) {
+  #offers .whatsapp-btn svg,
+  #offers .product-btn svg {
+    width: 14px !important;
+    height: 14px !important;
+    flex: 0 0 14px !important;
+  }
+}
+
+/* ---- 5. Footer 'Menu' card now has 5 items and item-numbers
+        renumbered. Keep the sliding hover the same; just make sure
+        the 5-column rhythm stays balanced if there's empty space. */
+.footer-menu-card .footer-link-list {
+  display: grid;
+  gap: 4px;
+}
+
+/* ---- 6. Misc dark-bg overrides on the homepage ---- */
+/* Hero italic 'Confidence' should stay gold even with the new global
+   override below it (h2 i { color: --ink !important } doesn't match
+   .hero h1 i, but be defensive). */
+.hero h1 i {
+  color: var(--accent-gold, #c5a25a) !important;
+  font-style: italic !important;
+}
+
+/* The .hero subtitle text was sometimes washed out by later rules. */
+.hero-sub {
+  color: rgba(255, 255, 255, .85) !important;
+}
+
+/* Header CTA buttons over hero stay in their visible glassy state on
+   home too (only desktop where the header is transparent). */
+@media (min-width: 981px) {
+  .site-header:not(.is-scrolled) .header-call,
+  .site-header.is-transparent .header-call {
+    color: #fff !important;
+    background: rgba(255, 255, 255, .12) !important;
+    border: 1px solid rgba(255, 255, 255, .42) !important;
+    backdrop-filter: blur(8px) !important;
+    -webkit-backdrop-filter: blur(8px) !important;
+  }
+}
