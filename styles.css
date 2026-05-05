@@ -10011,3 +10011,534 @@ svg {
     padding: 18px 20px;
   }
 }
+
+/* =========================================================
+   FINAL FIXES
+   * Header / logo behavior on About + Contact pages
+   * Icon visibility patches
+   * Aggressive small-screen responsiveness (down to 280px)
+   ========================================================= */
+
+/* ---- 1. Header over the dark hero on About + Contact ----
+   The site-header is sticky and goes 'transparent' until scrolled.
+   Earlier rules used filter:brightness(0) invert(1) on .brand-logo,
+   which assumed a dark logo. The new logo file is already white on
+   a transparent background, so on the home page (hero behind header)
+   it would render as black after invert, and on About/Contact's dark
+   hero it would also render black. Drop the invert filter and
+   instead just trust the PNG, but make sure the surrounding nav,
+   buttons and Call icon all read white at the top. */
+.about-page .site-header:not(.is-scrolled) .brand-logo,
+.contact-page .site-header:not(.is-scrolled) .brand-logo,
+body.about-page .site-header.is-transparent .brand-logo,
+body.contact-page .site-header.is-transparent .brand-logo {
+  filter: none !important;
+}
+
+/* On the home page, the user uploaded a white PNG that already
+   matches the dark hero. Same deal: don't invert it. */
+.site-header:not(.is-scrolled) .brand-logo,
+.site-header.is-transparent .brand-logo {
+  filter: drop-shadow(0 2px 8px rgba(0,0,0,.25)) !important;
+}
+
+.site-header.is-scrolled .brand-logo {
+  /* When scrolled and header turns white, invert the white logo to
+     the dark teal so it stays visible. */
+  filter: brightness(0) saturate(100%)
+          invert(20%) sepia(28%) saturate(842%) hue-rotate(141deg)
+          brightness(94%) contrast(92%) !important;
+}
+
+/* ---- 2. Logo sizing ----
+   Wide logo (~2:1). Cap *width* not just height to keep proportions
+   sensible inside 210px header column. */
+.brand-logo {
+  height: 44px !important;
+  width: auto !important;
+  max-width: 200px !important;
+  object-fit: contain !important;
+}
+
+@media (min-width: 1100px) {
+  .brand-logo {
+    height: 48px !important;
+    max-width: 220px !important;
+  }
+}
+
+@media (max-width: 980px) {
+  .brand-logo {
+    height: 38px !important;
+    max-width: 168px !important;
+  }
+}
+
+@media (max-width: 540px) {
+  .brand-logo {
+    height: 34px !important;
+    max-width: 150px !important;
+  }
+}
+
+@media (max-width: 360px) {
+  .brand-logo {
+    height: 30px !important;
+    max-width: 130px !important;
+  }
+}
+
+@media (max-width: 300px) {
+  .brand-logo {
+    height: 26px !important;
+    max-width: 112px !important;
+  }
+}
+
+/* Header shell tightens on small screens so logo + menu fit */
+@media (max-width: 980px) {
+  .header-shell {
+    grid-template-columns: 1fr auto !important;
+    height: 60px !important;
+    gap: 12px !important;
+    padding-left: 18px !important;
+    padding-right: 14px !important;
+  }
+}
+
+@media (max-width: 540px) {
+  .header-shell {
+    height: 56px !important;
+    padding-left: 14px !important;
+    padding-right: 8px !important;
+  }
+  .menu-toggle {
+    width: 36px !important;
+    height: 36px !important;
+  }
+}
+
+@media (max-width: 360px) {
+  .header-shell {
+    height: 52px !important;
+    padding-left: 12px !important;
+    padding-right: 6px !important;
+  }
+}
+
+/* The .top-note announcement bar text must not wrap on tiny widths */
+@media (max-width: 540px) {
+  .top-note {
+    font-size: 9.5px !important;
+    letter-spacing: .12em !important;
+    padding: 0 12px !important;
+    gap: 8px !important;
+  }
+}
+
+@media (max-width: 360px) {
+  .top-note {
+    font-size: 9px !important;
+    letter-spacing: .08em !important;
+    gap: 6px !important;
+  }
+}
+
+@media (max-width: 300px) {
+  .top-note {
+    font-size: 8.5px !important;
+    letter-spacing: .04em !important;
+    height: 26px !important;
+    line-height: 26px !important;
+  }
+  .site-header {
+    top: 26px !important;
+  }
+}
+
+/* ---- 3. Header above the dark hero gets readable nav text ---- */
+.about-page .site-header:not(.is-scrolled) .desktop-nav a,
+.contact-page .site-header:not(.is-scrolled) .desktop-nav a,
+.about-page .site-header.is-transparent .desktop-nav a,
+.contact-page .site-header.is-transparent .desktop-nav a {
+  color: rgba(255, 255, 255, .92) !important;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, .25) !important;
+}
+
+.about-page .site-header.is-scrolled .desktop-nav a,
+.contact-page .site-header.is-scrolled .desktop-nav a {
+  color: var(--ink) !important;
+  text-shadow: none !important;
+}
+
+/* Header CTA buttons need a real visible style on About + Contact at top */
+.about-page .site-header:not(.is-scrolled) .header-call,
+.contact-page .site-header:not(.is-scrolled) .header-call,
+.about-page .site-header.is-transparent .header-call,
+.contact-page .site-header.is-transparent .header-call {
+  color: #fff !important;
+  background: rgba(255, 255, 255, .12) !important;
+  border: 1px solid rgba(255, 255, 255, .42) !important;
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+}
+
+.about-page .site-header:not(.is-scrolled) .header-call.js-call::before,
+.contact-page .site-header:not(.is-scrolled) .header-call.js-call::before,
+.about-page .site-header.is-transparent .header-call.js-call::before,
+.contact-page .site-header.is-transparent .header-call.js-call::before {
+  filter: brightness(0) invert(1) !important;
+}
+
+/* ---- 4. Make the announcement bar contrast against dark hero ---- */
+.about-page .top-note,
+.contact-page .top-note {
+  background: rgba(8, 28, 29, .55) !important;
+  color: rgba(255, 255, 255, .85) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, .14) !important;
+}
+
+.about-page .top-note span,
+.contact-page .top-note span {
+  background: var(--accent-gold, #c5a25a) !important;
+}
+
+/* ---- 5. Contact page social icons fix ----
+   Originally Instagram outline + Facebook hybrid + TikTok fill. Some
+   stroke-based glyphs collapsed visually because the surrounding
+   <a> rectangle is small (38px) and the strokes were 1.6 against a
+   busy backdrop. Bump stroke-width and ensure SVGs always have a
+   visible silhouette. */
+.contact-page .contact-info-socials a svg {
+  width: 18px !important;
+  height: 18px !important;
+}
+
+.contact-page .contact-info-socials a svg [stroke="currentColor"] {
+  stroke-width: 1.8 !important;
+}
+
+/* The Instagram/Facebook glyph paths use mixed fill/stroke. Force
+   inheriting color across both so they always paint white. */
+.contact-page .contact-info-socials a svg * {
+  color: inherit !important;
+}
+
+/* On hover the icon background turns gold; make sure the SVG flips
+   to the dark teal for contrast. */
+.contact-page .contact-info-socials a:hover svg,
+.contact-page .contact-info-socials a:hover svg * {
+  color: #0a3334 !important;
+}
+
+/* ---- 6. Contact page FAQ caret ----
+   Old `+` rendered in DejaVu fallback; force a sized inline SVG via
+   CSS so the rotation animation looks right and stays visible. */
+.contact-page .contact-faq-icon {
+  font-family: var(--sans) !important;
+  font-size: 22px !important;
+  line-height: 1 !important;
+}
+
+/* ---- 7. About-page small-screen polish ---- */
+@media (max-width: 540px) {
+  .about-page .about-hero { padding: 96px 0 76px !important; }
+  .about-page .about-hero-title { font-size: clamp(26px, 7.4vw, 36px) !important; }
+  .about-page .about-hero-eyebrow { font-size: 10.5px !important; letter-spacing: .22em !important; }
+  .about-page .about-hero-eyebrow::before,
+  .about-page .about-hero-eyebrow::after { width: 18px !important; }
+  .about-page .about-breadcrumb { font-size: 10.5px !important; padding: 7px 14px !important; gap: 8px !important; }
+
+  .about-page .about-intro,
+  .about-page .about-why,
+  .about-page .about-booking { padding: 60px 0 !important; }
+  .about-page .about-intro-grid { gap: 32px !important; }
+  .about-page .about-intro-image-main { min-height: 280px !important; }
+  .about-page .about-intro-image-card { padding: 24px 22px !important; }
+
+  .about-page .about-stats { padding: 60px 0 !important; }
+  .about-page .about-stat { padding: 22px 14px !important; }
+  .about-page .about-stat-num { font-size: 38px !important; padding-bottom: 10px !important; }
+
+  .about-page .about-cinematic { height: 280px !important; }
+
+  .about-page .about-value-card,
+  .about-page .about-why-feature { padding: 24px 22px !important; }
+  .about-page .about-value-card h3 { font-size: 20px !important; }
+
+  .about-page .about-booking-panel { padding: 26px 20px !important; border-radius: 18px !important; }
+  .about-page .about-booking-form { gap: 12px !important; }
+  .about-page .about-field input,
+  .about-page .about-field select,
+  .about-page .about-field textarea { padding: 12px !important; font-size: 13.5px !important; }
+
+  .about-page .about-trust-row { gap: 10px 16px !important; }
+  .about-page .about-trust-item { font-size: 14px !important; }
+  .about-page .about-trust-dot { width: 4px !important; height: 4px !important; }
+}
+
+@media (max-width: 430px) {
+  .about-page .about-hero { padding: 88px 0 70px !important; min-height: 380px !important; }
+  .about-page .about-hero-title { font-size: clamp(24px, 8vw, 30px) !important; line-height: 1.12 !important; }
+  .about-page .about-hero-sub { font-size: 13.5px !important; line-height: 1.65 !important; }
+  .about-page .about-intro-actions { flex-direction: column !important; align-items: stretch !important; gap: 14px !important; }
+  .about-page .about-intro-actions .main-btn { width: 100% !important; }
+  .about-page .about-call-line { width: 100% !important; }
+  .about-page .about-stats-grid { gap: 12px !important; }
+  .about-page .about-stat-num { font-size: 34px !important; }
+  .about-page .about-cinematic-text { font-size: 17px !important; }
+  .about-page .about-play { width: 60px !important; height: 60px !important; }
+  .about-page .about-play svg { width: 18px !important; height: 18px !important; }
+  .about-page .about-why-frame { max-width: 240px !important; }
+  .about-page .about-why-feature { padding: 20px 18px !important; gap: 14px !important; }
+  .about-page .about-why-feature h3 { font-size: 17px !important; }
+  .about-page .about-booking-badge { padding: 8px 12px !important; gap: 8px !important; bottom: 12px !important; left: 12px !important; }
+  .about-page .about-booking-badge-num { font-size: 22px !important; }
+  .about-page .about-booking-badge-label { font-size: 9.5px !important; letter-spacing: .14em !important; max-width: 110px !important; }
+}
+
+@media (max-width: 360px) {
+  .about-page .about-hero { padding: 80px 0 64px !important; min-height: 360px !important; }
+  .about-page .about-hero-title { font-size: 24px !important; }
+  .about-page .about-hero-sub { font-size: 13px !important; }
+  .about-page .about-stats-grid { grid-template-columns: 1fr !important; }
+  .about-page .about-cinematic { height: 240px !important; }
+  .about-page .about-cinematic-text { font-size: 16px !important; }
+  .about-page .about-play { width: 56px !important; height: 56px !important; }
+  .about-page .about-why-frame { max-width: 220px !important; }
+  .about-page .about-trust-item { font-size: 13px !important; }
+  .about-page .about-value-card,
+  .about-page .about-why-feature,
+  .about-page .about-booking-panel,
+  .about-page .about-intro-image-card { padding: 22px 18px !important; }
+  .about-page .about-booking-actions .main-btn,
+  .about-page .about-booking-actions .soft-btn { padding: 12px 18px !important; font-size: 12.5px !important; }
+  .about-page .shell { padding-left: 14px !important; padding-right: 14px !important; }
+}
+
+/* Galaxy Z Fold front-display range (280-320). */
+@media (max-width: 320px) {
+  .about-page .about-hero { padding: 76px 0 60px !important; min-height: 340px !important; }
+  .about-page .about-hero-title { font-size: 22px !important; line-height: 1.16 !important; }
+  .about-page .about-hero-eyebrow { font-size: 10px !important; letter-spacing: .18em !important; }
+  .about-page .about-breadcrumb { font-size: 10px !important; padding: 6px 12px !important; }
+  .about-page .about-intro,
+  .about-page .about-why,
+  .about-page .about-booking,
+  .about-page .about-stats { padding-top: 50px !important; padding-bottom: 50px !important; }
+  .about-page .about-intro-image-main { min-height: 220px !important; }
+  .about-page .about-stat-num { font-size: 30px !important; }
+  .about-page .about-cinematic { height: 220px !important; }
+  .about-page .about-why-frame { max-width: 200px !important; border-radius: 140px 140px 24px 24px !important; }
+  .about-page .about-why-pin { width: 10px !important; height: 10px !important; }
+  .about-page .shell { padding-left: 12px !important; padding-right: 12px !important; }
+}
+
+/* ---- 8. Contact-page small-screen polish ---- */
+@media (max-width: 540px) {
+  .contact-page .contact-hero { padding: 96px 0 76px !important; min-height: 400px !important; }
+  .contact-page .contact-hero-title { font-size: clamp(26px, 7.4vw, 36px) !important; line-height: 1.14 !important; }
+  .contact-page .contact-hero-eyebrow { font-size: 10.5px !important; letter-spacing: .22em !important; }
+  .contact-page .contact-hero-eyebrow::before,
+  .contact-page .contact-hero-eyebrow::after { width: 18px !important; }
+  .contact-page .contact-breadcrumb { font-size: 10.5px !important; padding: 7px 14px !important; gap: 8px !important; }
+
+  .contact-page .contact-cards-section,
+  .contact-page .contact-form-section,
+  .contact-page .contact-faq-section { padding: 60px 0 !important; }
+  .contact-page .contact-cta-strip { padding: 60px 0 !important; }
+
+  .contact-page .contact-card { padding: 26px 22px !important; }
+  .contact-page .contact-card h3 { font-size: 20px !important; }
+  .contact-page .contact-card p { font-size: 14px !important; }
+  .contact-page .contact-card-icon { width: 52px !important; height: 52px !important; border-radius: 14px !important; }
+  .contact-page .contact-card-badge { font-size: 9px !important; padding: 4px 10px !important; letter-spacing: .12em !important; top: 14px !important; right: 14px !important; }
+
+  .contact-page .contact-info-panel,
+  .contact-page .contact-form-panel { padding: 28px 22px !important; border-radius: 20px !important; }
+  .contact-page .contact-info-panel h2,
+  .contact-page .contact-form-panel h2 { font-size: 25px !important; line-height: 1.18 !important; }
+  .contact-page .contact-info-list { gap: 16px !important; }
+  .contact-page .contact-info-icon { width: 38px !important; height: 38px !important; }
+  .contact-page .contact-info-value { font-size: 14px !important; }
+  .contact-page .contact-info-socials { gap: 8px !important; flex-wrap: wrap !important; }
+  .contact-page .contact-info-socials a { width: 34px !important; height: 34px !important; }
+
+  .contact-page .contact-form { gap: 12px !important; }
+  .contact-page .contact-field input,
+  .contact-page .contact-field select,
+  .contact-page .contact-field textarea { padding: 12px !important; font-size: 13.5px !important; }
+  .contact-page .contact-field textarea { min-height: 110px !important; }
+
+  .contact-page .contact-faq summary { font-size: 16px !important; }
+  .contact-page .contact-faq { padding: 18px 18px !important; }
+  .contact-page .contact-faq-icon { width: 28px !important; height: 28px !important; font-size: 18px !important; }
+
+  .contact-page .contact-cta-heading { font-size: clamp(26px, 7.4vw, 36px) !important; line-height: 1.14 !important; }
+  .contact-page .contact-cta-sub { font-size: 14px !important; line-height: 1.65 !important; }
+
+  .contact-page .contact-map-card {
+    margin: -80px auto 18px !important;
+    width: calc(100% - 28px) !important;
+    padding: 24px 22px !important;
+    border-radius: 18px !important;
+  }
+  .contact-page .contact-map-card h3 { font-size: 21px !important; }
+  .contact-page .contact-map-help { font-size: 12.5px !important; }
+}
+
+@media (max-width: 430px) {
+  .contact-page .contact-hero { padding: 88px 0 70px !important; min-height: 380px !important; }
+  .contact-page .contact-hero-title { font-size: clamp(23px, 8vw, 30px) !important; }
+  .contact-page .contact-hero-sub { font-size: 13.5px !important; line-height: 1.65 !important; }
+  .contact-page .contact-cta-actions { width: 100% !important; flex-direction: column !important; align-items: stretch !important; }
+  .contact-page .contact-cta-primary,
+  .contact-page .contact-cta-ghost { width: 100% !important; justify-content: center !important; }
+  .contact-page .contact-form-actions { flex-direction: column !important; align-items: stretch !important; }
+  .contact-page .contact-submit-btn,
+  .contact-page .contact-soft-btn { width: 100% !important; justify-content: center !important; }
+}
+
+@media (max-width: 360px) {
+  .contact-page .contact-hero { padding: 80px 0 64px !important; min-height: 360px !important; }
+  .contact-page .contact-hero-title { font-size: 22px !important; line-height: 1.18 !important; }
+  .contact-page .contact-cards-section,
+  .contact-page .contact-form-section,
+  .contact-page .contact-faq-section,
+  .contact-page .contact-cta-strip { padding: 50px 0 !important; }
+  .contact-page .contact-card,
+  .contact-page .contact-info-panel,
+  .contact-page .contact-form-panel,
+  .contact-page .contact-faq { padding: 22px 18px !important; }
+  .contact-page .contact-card h3 { font-size: 19px !important; }
+  .contact-page .contact-info-panel h2,
+  .contact-page .contact-form-panel h2 { font-size: 22px !important; }
+  .contact-page .contact-cta-heading { font-size: 22px !important; }
+  .contact-page .contact-info-socials { gap: 6px !important; }
+  .contact-page .contact-info-socials a { width: 32px !important; height: 32px !important; }
+  .contact-page .contact-info-socials-label { display: none !important; }
+  .contact-page .shell { padding-left: 14px !important; padding-right: 14px !important; }
+}
+
+@media (max-width: 320px) {
+  .contact-page .contact-hero { padding: 72px 0 56px !important; min-height: 340px !important; }
+  .contact-page .contact-hero-title { font-size: 20px !important; }
+  .contact-page .contact-hero-eyebrow { font-size: 9.5px !important; letter-spacing: .16em !important; }
+  .contact-page .contact-hero-eyebrow::before,
+  .contact-page .contact-hero-eyebrow::after { width: 14px !important; }
+  .contact-page .contact-breadcrumb { font-size: 9.5px !important; padding: 6px 12px !important; gap: 6px !important; }
+
+  .contact-page .contact-cards-section,
+  .contact-page .contact-form-section,
+  .contact-page .contact-faq-section,
+  .contact-page .contact-cta-strip { padding: 44px 0 !important; }
+
+  .contact-page .contact-card,
+  .contact-page .contact-info-panel,
+  .contact-page .contact-form-panel,
+  .contact-page .contact-faq { padding: 20px 16px !important; border-radius: 16px !important; }
+
+  .contact-page .contact-card h3 { font-size: 18px !important; }
+  .contact-page .contact-card p { font-size: 13px !important; }
+  .contact-page .contact-card-link { font-size: 12.5px !important; }
+  .contact-page .contact-card-icon { width: 46px !important; height: 46px !important; border-radius: 12px !important; margin-bottom: 16px !important; }
+
+  .contact-page .contact-info-panel h2,
+  .contact-page .contact-form-panel h2 { font-size: 20px !important; }
+  .contact-page .contact-info-icon { width: 34px !important; height: 34px !important; border-radius: 10px !important; }
+  .contact-page .contact-info-value { font-size: 13.5px !important; }
+  .contact-page .contact-info-label { letter-spacing: .14em !important; font-size: 9.5px !important; }
+
+  .contact-page .contact-faq summary { font-size: 15px !important; gap: 10px !important; }
+  .contact-page .contact-faq p { font-size: 13.5px !important; }
+  .contact-page .contact-faq-icon { width: 26px !important; height: 26px !important; font-size: 16px !important; }
+
+  .contact-page .contact-cta-heading { font-size: 20px !important; line-height: 1.18 !important; }
+  .contact-page .contact-cta-sub { font-size: 13px !important; }
+  .contact-page .contact-cta-primary,
+  .contact-page .contact-cta-ghost { padding: 12px 18px !important; font-size: 12.5px !important; }
+
+  .contact-page .contact-form { gap: 10px !important; }
+  .contact-page .contact-field input,
+  .contact-page .contact-field select,
+  .contact-page .contact-field textarea { padding: 11px !important; font-size: 13px !important; border-radius: 10px !important; }
+  .contact-page .contact-submit-btn,
+  .contact-page .contact-soft-btn { padding: 12px 16px !important; font-size: 12.5px !important; }
+
+  .contact-page .contact-map-frame { height: 320px !important; }
+  .contact-page .contact-map-card {
+    margin: -64px auto 14px !important;
+    padding: 18px 16px !important;
+    border-radius: 14px !important;
+    width: calc(100% - 24px) !important;
+  }
+  .contact-page .contact-map-card h3 { font-size: 18px !important; }
+  .contact-page .contact-map-help { font-size: 12px !important; margin-bottom: 14px !important; }
+  .contact-page .contact-map-cta { font-size: 12px !important; }
+
+  .contact-page .shell { padding-left: 12px !important; padding-right: 12px !important; }
+}
+
+/* Galaxy Z Fold (folded ~280 wide) — last line of defence. */
+@media (max-width: 300px) {
+  .contact-page .contact-hero { padding: 64px 0 48px !important; min-height: 320px !important; }
+  .contact-page .contact-hero-title { font-size: 18px !important; line-height: 1.2 !important; }
+  .contact-page .contact-hero-sub { font-size: 12.5px !important; }
+  .contact-page .contact-cta-heading { font-size: 18px !important; }
+  .contact-page .contact-card-icon { width: 42px !important; height: 42px !important; }
+  .contact-page .contact-card h3 { font-size: 17px !important; }
+  .contact-page .contact-info-panel h2,
+  .contact-page .contact-form-panel h2 { font-size: 19px !important; }
+
+  .about-page .about-hero { padding: 64px 0 48px !important; min-height: 300px !important; }
+  .about-page .about-hero-title { font-size: 19px !important; line-height: 1.2 !important; }
+  .about-page .about-hero-sub { font-size: 12.5px !important; }
+  .about-page .about-stat-num { font-size: 26px !important; }
+  .about-page .about-cinematic { height: 200px !important; }
+
+  /* Site-wide micro fixes for ultra narrow */
+  .shell { padding-left: 10px !important; padding-right: 10px !important; }
+  .header-shell { gap: 8px !important; }
+  .menu-toggle { width: 32px !important; height: 32px !important; }
+  .menu-toggle span { width: 18px !important; }
+
+  /* Mobile nav inside the panel */
+  .mobile-panel { padding: 8px 14px 18px !important; }
+  .mobile-nav a { font-size: 13px !important; padding: 10px 0 !important; }
+  .mobile-actions { grid-template-columns: 1fr !important; gap: 8px !important; }
+}
+
+/* ---- 9. Mobile menu panel polish (any small screen) ---- */
+@media (max-width: 540px) {
+  .mobile-panel.is-open {
+    position: fixed !important;
+    top: 86px !important; /* below top-note + header */
+    left: 0 !important;
+    right: 0 !important;
+    max-height: calc(100vh - 86px) !important;
+    overflow-y: auto !important;
+    box-shadow: 0 24px 48px rgba(18, 60, 61, .22) !important;
+    z-index: 999 !important;
+  }
+}
+
+/* ---- 10. Float WhatsApp button stays out of the way ---- */
+@media (max-width: 540px) {
+  .float-wa {
+    right: 14px !important;
+    bottom: 14px !important;
+    width: 48px !important;
+    height: 48px !important;
+    font-size: 20px !important;
+  }
+}
+
+@media (max-width: 320px) {
+  .float-wa {
+    right: 10px !important;
+    bottom: 10px !important;
+    width: 44px !important;
+    height: 44px !important;
+    font-size: 18px !important;
+  }
+}
