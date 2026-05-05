@@ -10019,35 +10019,52 @@ svg {
    * Aggressive small-screen responsiveness (down to 280px)
    ========================================================= */
 
-/* ---- 1. Header over the dark hero on About + Contact ----
-   The site-header is sticky and goes 'transparent' until scrolled.
-   Earlier rules used filter:brightness(0) invert(1) on .brand-logo,
-   which assumed a dark logo. The new logo file is already white on
-   a transparent background, so on the home page (hero behind header)
-   it would render as black after invert, and on About/Contact's dark
-   hero it would also render black. Drop the invert filter and
-   instead just trust the PNG, but make sure the surrounding nav,
-   buttons and Call icon all read white at the top. */
-.about-page .site-header:not(.is-scrolled) .brand-logo,
-.contact-page .site-header:not(.is-scrolled) .brand-logo,
-body.about-page .site-header.is-transparent .brand-logo,
-body.contact-page .site-header.is-transparent .brand-logo {
-  filter: none !important;
+/* ---- 1. Header / logo color on every state ----
+   The logo file is white-on-transparent. There are 3 visual states:
+   (a) at top of dark hero (transparent header)  -> logo stays white
+   (b) scrolled past hero (white sticky header)  -> logo painted teal
+   (c) on small screens, the existing CSS forces header background to
+       white at all times, so the logo also needs to be teal there.
+
+   The old `brightness(0) invert(1)` filter inverted a white logo to
+   black, which is why the logo was invisible on the dark hero. Drop
+   it and replace with a deterministic recolor pipeline. */
+
+/* Reusable filter token: paint a white logo as deep brand teal. */
+:root {
+  --logo-teal-filter:
+    brightness(0)
+    saturate(100%)
+    invert(33%)
+    sepia(46%)
+    saturate(580%)
+    hue-rotate(140deg)
+    brightness(82%)
+    contrast(96%);
 }
 
-/* On the home page, the user uploaded a white PNG that already
-   matches the dark hero. Same deal: don't invert it. */
+/* (a) Transparent header over the hero — keep the logo white with
+   a soft drop-shadow so it lifts off the photo. */
 .site-header:not(.is-scrolled) .brand-logo,
 .site-header.is-transparent .brand-logo {
-  filter: drop-shadow(0 2px 8px rgba(0,0,0,.25)) !important;
+  filter: drop-shadow(0 2px 8px rgba(0,0,0,.32)) !important;
 }
 
+/* (b) Scrolled state on desktop — header turns white, paint logo teal. */
 .site-header.is-scrolled .brand-logo {
-  /* When scrolled and header turns white, invert the white logo to
-     the dark teal so it stays visible. */
-  filter: brightness(0) saturate(100%)
-          invert(20%) sepia(28%) saturate(842%) hue-rotate(141deg)
-          brightness(94%) contrast(92%) !important;
+  filter: var(--logo-teal-filter) !important;
+}
+
+/* (c) Mobile (<= 980px). Existing CSS forces the header background
+   to opaque white at this breakpoint regardless of scroll state, so
+   we always paint the logo teal so it stays legible. */
+@media (max-width: 980px) {
+  .site-header .brand-logo,
+  .site-header:not(.is-scrolled) .brand-logo,
+  .site-header.is-transparent .brand-logo,
+  .site-header.is-scrolled .brand-logo {
+    filter: var(--logo-teal-filter) !important;
+  }
 }
 
 /* ---- 2. Logo sizing ----
@@ -10156,51 +10173,66 @@ body.contact-page .site-header.is-transparent .brand-logo {
   }
 }
 
-/* ---- 3. Header above the dark hero gets readable nav text ---- */
-.about-page .site-header:not(.is-scrolled) .desktop-nav a,
-.contact-page .site-header:not(.is-scrolled) .desktop-nav a,
-.about-page .site-header.is-transparent .desktop-nav a,
-.contact-page .site-header.is-transparent .desktop-nav a {
-  color: rgba(255, 255, 255, .92) !important;
-  text-shadow: 0 2px 8px rgba(0, 0, 0, .25) !important;
+/* ---- 3. Header above the dark hero on About + Contact (desktop) ----
+   These two pages start with a dark cinematic hero, so while the
+   header is transparent we need white nav text and a glassy Call
+   button. Only applies above 980px; below that the existing rules
+   force a white header bar so the desktop nav links don't render. */
+@media (min-width: 981px) {
+  .about-page .site-header:not(.is-scrolled) .desktop-nav a,
+  .contact-page .site-header:not(.is-scrolled) .desktop-nav a,
+  .about-page .site-header.is-transparent .desktop-nav a,
+  .contact-page .site-header.is-transparent .desktop-nav a {
+    color: rgba(255, 255, 255, .92) !important;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, .35) !important;
+  }
+
+  .about-page .site-header.is-scrolled .desktop-nav a,
+  .contact-page .site-header.is-scrolled .desktop-nav a {
+    color: var(--ink) !important;
+    text-shadow: none !important;
+  }
+
+  .about-page .site-header:not(.is-scrolled) .header-call,
+  .contact-page .site-header:not(.is-scrolled) .header-call,
+  .about-page .site-header.is-transparent .header-call,
+  .contact-page .site-header.is-transparent .header-call {
+    color: #fff !important;
+    background: rgba(255, 255, 255, .12) !important;
+    border: 1px solid rgba(255, 255, 255, .45) !important;
+    backdrop-filter: blur(8px) !important;
+    -webkit-backdrop-filter: blur(8px) !important;
+  }
+
+  .about-page .site-header:not(.is-scrolled) .header-call.js-call::before,
+  .contact-page .site-header:not(.is-scrolled) .header-call.js-call::before,
+  .about-page .site-header.is-transparent .header-call.js-call::before,
+  .contact-page .site-header.is-transparent .header-call.js-call::before {
+    filter: brightness(0) invert(1) !important;
+  }
+
+  /* Logo on About/Contact stays white over the hero (don't tint teal). */
+  .about-page .site-header:not(.is-scrolled) .brand-logo,
+  .contact-page .site-header:not(.is-scrolled) .brand-logo,
+  .about-page .site-header.is-transparent .brand-logo,
+  .contact-page .site-header.is-transparent .brand-logo {
+    filter: drop-shadow(0 2px 10px rgba(0,0,0,.45)) !important;
+  }
 }
 
-.about-page .site-header.is-scrolled .desktop-nav a,
-.contact-page .site-header.is-scrolled .desktop-nav a {
-  color: var(--ink) !important;
-  text-shadow: none !important;
-}
+/* ---- 4. Announcement bar contrast on About + Contact (desktop) ---- */
+@media (min-width: 981px) {
+  .about-page .top-note,
+  .contact-page .top-note {
+    background: rgba(8, 28, 29, .55) !important;
+    color: rgba(255, 255, 255, .85) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, .14) !important;
+  }
 
-/* Header CTA buttons need a real visible style on About + Contact at top */
-.about-page .site-header:not(.is-scrolled) .header-call,
-.contact-page .site-header:not(.is-scrolled) .header-call,
-.about-page .site-header.is-transparent .header-call,
-.contact-page .site-header.is-transparent .header-call {
-  color: #fff !important;
-  background: rgba(255, 255, 255, .12) !important;
-  border: 1px solid rgba(255, 255, 255, .42) !important;
-  backdrop-filter: blur(8px) !important;
-  -webkit-backdrop-filter: blur(8px) !important;
-}
-
-.about-page .site-header:not(.is-scrolled) .header-call.js-call::before,
-.contact-page .site-header:not(.is-scrolled) .header-call.js-call::before,
-.about-page .site-header.is-transparent .header-call.js-call::before,
-.contact-page .site-header.is-transparent .header-call.js-call::before {
-  filter: brightness(0) invert(1) !important;
-}
-
-/* ---- 4. Make the announcement bar contrast against dark hero ---- */
-.about-page .top-note,
-.contact-page .top-note {
-  background: rgba(8, 28, 29, .55) !important;
-  color: rgba(255, 255, 255, .85) !important;
-  border-bottom: 1px solid rgba(255, 255, 255, .14) !important;
-}
-
-.about-page .top-note span,
-.contact-page .top-note span {
-  background: var(--accent-gold, #c5a25a) !important;
+  .about-page .top-note span,
+  .contact-page .top-note span {
+    background: var(--accent-gold, #c5a25a) !important;
+  }
 }
 
 /* ---- 5. Contact page social icons fix ----
