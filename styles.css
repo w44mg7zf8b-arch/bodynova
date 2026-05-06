@@ -12936,3 +12936,628 @@ svg {
   }
   .service-detail-page .service-detail-actions { gap: 10px; }
 }
+
+/* =========================================================
+   SERVICE DETAIL REVAMP
+   - Hero 80vh
+   - Header dropdown text always readable
+   - Bigger header logo
+   - Richer overview section + CTA
+   - Visual process stepper
+   - Cinematic 'Why Choose This Treatment' closing section
+   ========================================================= */
+
+/* ---- 1. HERO 80vh ---- */
+.service-detail-page .service-detail-hero,
+.services-page .services-hero {
+  min-height: clamp(560px, 80vh, 820px) !important;
+}
+
+/* On very short windows or small phones, allow it to compress so the
+   user can still see content without endless scrolling. */
+@media (max-height: 720px) and (min-width: 769px) {
+  .service-detail-page .service-detail-hero,
+  .services-page .services-hero {
+    min-height: 560px !important;
+  }
+}
+
+@media (max-width: 540px) {
+  .service-detail-page .service-detail-hero,
+  .services-page .services-hero {
+    min-height: clamp(440px, 76vh, 620px) !important;
+    padding-top: 110px !important;
+    padding-bottom: 70px !important;
+  }
+}
+
+/* ---- 2. HEADER DROPDOWN: text always dark ----
+   The desktop nav links inherit white from
+   .site-header:not(.is-scrolled) .desktop-nav a, which has higher
+   specificity than .nav-dropdown-menu a. The dropdown menu sits on a
+   white background, so its items must stay dark. We re-state with
+   higher specificity inside .desktop-nav so the cascade resolves
+   correctly on every header state. */
+.site-header .desktop-nav .nav-dropdown-menu a,
+.site-header:not(.is-scrolled) .desktop-nav .nav-dropdown-menu a,
+.site-header.is-transparent .desktop-nav .nav-dropdown-menu a,
+.site-header.is-scrolled  .desktop-nav .nav-dropdown-menu a {
+  color: #123c3d !important;
+  text-shadow: none !important;
+}
+
+.site-header .desktop-nav .nav-dropdown-menu a.nav-dropdown-all,
+.site-header:not(.is-scrolled) .desktop-nav .nav-dropdown-menu a.nav-dropdown-all,
+.site-header.is-transparent .desktop-nav .nav-dropdown-menu a.nav-dropdown-all,
+.site-header.is-scrolled  .desktop-nav .nav-dropdown-menu a.nav-dropdown-all {
+  color: #ffffff !important;
+}
+
+.site-header .desktop-nav .nav-dropdown-menu a:hover {
+  color: #1d7576 !important;
+}
+.site-header .desktop-nav .nav-dropdown-menu a.nav-dropdown-all:hover {
+  color: #ffffff !important;
+}
+
+/* The :after underline on desktop-nav anchors should not paint on
+   dropdown items (it pushed the chevron and looked broken). */
+.site-header .desktop-nav .nav-dropdown-menu a::after,
+.site-header .desktop-nav .nav-dropdown-trigger::after {
+  display: none !important;
+}
+
+/* The dropdown trigger over the dark hero needs the chevron to be
+   visible — keep its text white but unify with the rest of the nav. */
+.site-header:not(.is-scrolled) .nav-dropdown-trigger,
+.site-header.is-transparent .nav-dropdown-trigger {
+  color: rgba(255, 255, 255, .92) !important;
+}
+
+.site-header.is-scrolled .nav-dropdown-trigger {
+  color: var(--ink, #123c3d) !important;
+}
+
+/* ---- 3. BIGGER LOGO across all breakpoints ----
+   ~12-15% bump vs the previous size. Caps both height and max-width
+   so the wide PNG never blows the 210px header column. */
+.brand-logo {
+  height: 60px !important;
+  max-width: 260px !important;
+  width: auto !important;
+  object-fit: contain !important;
+}
+
+@media (min-width: 1100px) {
+  .brand-logo {
+    height: 64px !important;
+    max-width: 280px !important;
+  }
+}
+
+@media (max-width: 980px) {
+  .brand-logo {
+    height: 52px !important;
+    max-width: 220px !important;
+  }
+  .header-shell { height: 70px !important; }
+  .mobile-panel { top: 70px !important; max-height: calc(100svh - 70px) !important; }
+}
+
+@media (max-width: 540px) {
+  .brand-logo {
+    height: 46px !important;
+    max-width: 196px !important;
+  }
+  .header-shell { height: 66px !important; }
+  .mobile-panel { top: 66px !important; max-height: calc(100svh - 66px) !important; }
+}
+
+@media (max-width: 360px) {
+  .brand-logo {
+    height: 40px !important;
+    max-width: 168px !important;
+  }
+  .header-shell { height: 60px !important; }
+  .mobile-panel { top: 60px !important; max-height: calc(100svh - 60px) !important; }
+}
+
+@media (max-width: 300px) {
+  .brand-logo {
+    height: 34px !important;
+    max-width: 140px !important;
+  }
+}
+
+/* ---- 4. OVERVIEW SECTION refresh ----
+   Allow extra paragraphs and a CTA row inside the copy column. */
+.service-detail-page .service-overview-body {
+  color: var(--muted);
+  font-size: 14.5px;
+  line-height: 1.78;
+  margin: 0 0 16px;
+  max-width: 540px;
+}
+
+.service-detail-page .service-overview-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-top: 24px;
+}
+
+.service-detail-page .service-overview-btn-primary,
+.service-detail-page .service-overview-btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 13px 24px;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: .04em;
+  text-decoration: none;
+  transition: transform .2s ease, box-shadow .2s ease, background .2s ease, border-color .2s ease, color .2s ease;
+  white-space: nowrap;
+}
+
+.service-detail-page .service-overview-btn-primary {
+  background: linear-gradient(135deg, #1b6d6e 0%, #2f9893 60%, var(--accent-gold) 100%);
+  color: #fff;
+  border: none;
+  box-shadow: 0 12px 28px rgba(29, 117, 118, .22);
+}
+
+.service-detail-page .service-overview-btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 18px 36px rgba(29, 117, 118, .32);
+}
+
+.service-detail-page .service-overview-btn-ghost {
+  background: #fff;
+  color: var(--teal);
+  border: 1px solid rgba(29, 117, 118, .35);
+}
+
+.service-detail-page .service-overview-btn-ghost svg {
+  color: #25D366;
+  fill: currentColor;
+  flex-shrink: 0;
+}
+
+.service-detail-page .service-overview-btn-ghost:hover {
+  background: rgba(29, 117, 118, .06);
+  border-color: var(--teal);
+}
+
+/* Small floating tag pinned to the overview image. */
+.service-detail-page .service-overview-media {
+  position: relative;
+}
+
+.service-detail-page .service-overview-tag {
+  position: absolute;
+  bottom: 22px;
+  left: 22px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, .94);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(197, 162, 90, .28);
+  box-shadow: 0 14px 28px rgba(18, 60, 61, .14);
+  z-index: 2;
+}
+
+.service-detail-page .service-overview-tag-cat {
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--teal);
+  padding: 3px 9px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, rgba(197, 162, 90, .25), rgba(29, 117, 118, .14));
+}
+
+.service-detail-page .service-overview-tag-line {
+  font-family: var(--serif);
+  font-size: 14px;
+  font-style: italic;
+  color: var(--ink);
+}
+
+/* ---- 5. PROCESS: visual stepper ---- */
+.service-detail-page .service-process-sub {
+  color: var(--muted);
+  font-size: 14.5px;
+  line-height: 1.7;
+  max-width: 580px;
+  margin: 12px auto 0;
+}
+
+.service-detail-page .service-process-track {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 22px;
+  align-items: stretch;
+  padding-top: 10px;
+}
+
+.service-detail-page .service-process-line {
+  position: absolute;
+  left: 7%;
+  right: 7%;
+  top: 56px;
+  height: 2px;
+  background: linear-gradient(90deg,
+    rgba(197, 162, 90, .16),
+    rgba(29, 117, 118, .55) 35%,
+    rgba(29, 117, 118, .55) 65%,
+    rgba(197, 162, 90, .16));
+  pointer-events: none;
+  z-index: 0;
+}
+
+.service-detail-page .service-process-line::before,
+.service-detail-page .service-process-line::after {
+  content: "";
+  position: absolute;
+  top: -3px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent-gold);
+  box-shadow: 0 0 0 4px rgba(197, 162, 90, .25);
+}
+
+.service-detail-page .service-process-line::before { left: -2px; }
+.service-detail-page .service-process-line::after  { right: -2px; }
+
+.service-detail-page .service-process-step {
+  position: relative;
+  background: #ffffff;
+  border: 1px solid var(--hairline, rgba(18, 60, 61, .08));
+  border-radius: 20px;
+  padding: 70px 22px 28px;
+  text-align: center;
+  box-shadow: 0 12px 28px rgba(18, 60, 61, .06);
+  z-index: 1;
+  transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease;
+}
+
+.service-detail-page .service-process-step:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 22px 44px rgba(18, 60, 61, .12);
+  border-color: rgba(197, 162, 90, .35);
+}
+
+.service-detail-page .service-process-num {
+  position: absolute;
+  top: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent-gold), var(--teal));
+  color: #fff;
+  font-family: var(--serif);
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: .02em;
+  box-shadow: 0 12px 28px rgba(29, 117, 118, .28);
+  border: 4px solid var(--cream, #fffbdf);
+  z-index: 2;
+}
+
+.service-detail-page .service-process-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(197, 162, 90, .22), rgba(29, 117, 118, .12));
+  color: var(--teal);
+  margin-bottom: 14px;
+}
+
+.service-detail-page .service-process-step h3 {
+  font-family: var(--serif);
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--ink);
+  margin: 0 0 8px;
+  line-height: 1.22;
+}
+
+.service-detail-page .service-process-step p {
+  color: var(--muted);
+  font-size: 13.5px;
+  line-height: 1.65;
+  margin: 0;
+}
+
+/* Hide the connector line on tablet/mobile and let cards stack. */
+@media (max-width: 1024px) {
+  .service-detail-page .service-process-track {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 50px 22px;
+  }
+  .service-detail-page .service-process-line {
+    display: none;
+  }
+}
+
+@media (max-width: 540px) {
+  .service-detail-page .service-process-track {
+    grid-template-columns: 1fr;
+    gap: 50px;
+  }
+  .service-detail-page .service-process-step {
+    padding: 60px 22px 24px;
+  }
+  .service-detail-page .service-process-num {
+    width: 56px;
+    height: 56px;
+    font-size: 19px;
+  }
+}
+
+/* ---- 6. WHY CHOOSE THIS TREATMENT (cinematic LAST section) ---- */
+.service-detail-page .service-whychoose {
+  position: relative;
+  padding: 110px 0;
+  overflow: hidden;
+  isolation: isolate;
+  color: #fff;
+}
+
+.service-detail-page .service-whychoose-bg {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background-size: cover;
+  background-position: center;
+  filter: saturate(1.05);
+}
+
+.service-detail-page .service-whychoose-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    linear-gradient(135deg,
+      rgba(8, 28, 29, .85) 0%,
+      rgba(10, 51, 52, .78) 45%,
+      rgba(29, 117, 118, .72) 100%),
+    radial-gradient(120% 80% at 50% 0%, rgba(197, 162, 90, .12) 0%, transparent 60%);
+}
+
+.service-detail-page .service-whychoose-inner {
+  position: relative;
+  z-index: 1;
+}
+
+.service-detail-page .service-whychoose-head {
+  text-align: center;
+  max-width: 720px;
+  margin: 0 auto 56px;
+}
+
+.service-detail-page .service-whychoose-eyebrow {
+  font-family: var(--sans);
+  font-size: 12px;
+  letter-spacing: .32em;
+  text-transform: uppercase;
+  color: var(--accent-gold) !important;
+  font-weight: 600;
+  margin-bottom: 18px;
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.service-detail-page .service-whychoose-eyebrow::before,
+.service-detail-page .service-whychoose-eyebrow::after {
+  content: "";
+  width: 28px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent-gold), transparent);
+}
+
+.service-detail-page .service-whychoose-heading {
+  font-family: var(--serif);
+  font-size: clamp(28px, 3.6vw, 46px);
+  font-weight: 500;
+  line-height: 1.14;
+  color: #fff !important;
+  margin: 0 auto 16px;
+  text-shadow: 0 4px 28px rgba(0, 0, 0, .35);
+}
+
+.service-detail-page .service-whychoose-heading i {
+  color: var(--accent-gold) !important;
+  font-style: italic;
+  font-weight: 400;
+}
+
+.service-detail-page .service-whychoose-sub {
+  font-size: 15.5px;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, .88) !important;
+  max-width: 580px;
+  margin: 0 auto;
+}
+
+.service-detail-page .service-whychoose-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  margin-bottom: 56px;
+}
+
+.service-whychoose-card {
+  background: rgba(255, 255, 255, .06);
+  border: 1px solid rgba(255, 255, 255, .14);
+  border-radius: 20px;
+  padding: 28px 24px;
+  text-align: left;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  transition: transform .3s ease, border-color .3s ease, background .3s ease;
+}
+
+.service-whychoose-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(197, 162, 90, .55);
+  background: rgba(255, 255, 255, .10);
+}
+
+.service-whychoose-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, rgba(197, 162, 90, .35), rgba(29, 117, 118, .35));
+  color: var(--accent-gold);
+  margin-bottom: 18px;
+  border: 1px solid rgba(197, 162, 90, .35);
+}
+
+.service-whychoose-card h3 {
+  font-family: var(--serif);
+  font-size: 20px;
+  font-weight: 500;
+  color: #fff !important;
+  margin: 0 0 10px;
+  line-height: 1.22;
+}
+
+.service-whychoose-card p {
+  color: rgba(255, 255, 255, .8) !important;
+  font-size: 13.5px;
+  line-height: 1.65;
+  margin: 0;
+}
+
+.service-detail-page .service-whychoose-cta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.service-detail-page .service-whychoose-primary,
+.service-detail-page .service-whychoose-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 28px;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 13.5px;
+  letter-spacing: .04em;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform .2s ease, box-shadow .2s ease, background .2s ease, border-color .2s ease;
+  white-space: nowrap;
+}
+
+.service-detail-page .service-whychoose-primary {
+  background: linear-gradient(135deg, var(--accent-gold), var(--teal));
+  color: #fff;
+  box-shadow: 0 14px 32px rgba(197, 162, 90, .32);
+  border: none;
+}
+
+.service-detail-page .service-whychoose-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 18px 40px rgba(197, 162, 90, .42);
+}
+
+.service-detail-page .service-whychoose-ghost {
+  background: rgba(255, 255, 255, .12);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, .42);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.service-detail-page .service-whychoose-ghost:hover {
+  background: rgba(255, 255, 255, .20);
+  border-color: rgba(255, 255, 255, .65);
+}
+
+@media (max-width: 1100px) {
+  .service-detail-page .service-whychoose-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 540px) {
+  .service-detail-page .service-whychoose {
+    padding: 80px 0;
+  }
+  .service-detail-page .service-whychoose-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+  .service-detail-page .service-whychoose-cta {
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+  }
+  .service-detail-page .service-whychoose-primary,
+  .service-detail-page .service-whychoose-ghost {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* ---- 7. Misc cleanup that comes from removing the old benefits
+        section and adding the floating tag on the overview image. */
+.service-detail-page .service-overview-image {
+  /* slightly less aggressive aspect ratio so content reads well */
+  aspect-ratio: 4 / 5;
+}
+
+@media (max-width: 1024px) {
+  .service-detail-page .service-overview-image {
+    aspect-ratio: 16 / 10;
+  }
+}
+
+@media (max-width: 540px) {
+  .service-detail-page .service-overview-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .service-detail-page .service-overview-btn-primary,
+  .service-detail-page .service-overview-btn-ghost {
+    width: 100%;
+    justify-content: center;
+  }
+  .service-detail-page .service-overview-tag {
+    bottom: 14px;
+    left: 14px;
+    padding: 8px 12px;
+    gap: 6px;
+  }
+  .service-detail-page .service-overview-tag-line {
+    font-size: 12.5px;
+  }
+}
