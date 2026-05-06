@@ -1,9 +1,9 @@
 const HEADER_FALLBACK = `
 <div class="top-note"><span></span>Premium aesthetic clinic treatments in Dubai<span></span></div>
-<header class="site-header" id="site-header"><div class="shell header-shell"><a href="index.html" class="brand"><img src="assets/images/logo-light.png" alt="BodyNova Beauty Center" class="brand-logo brand-logo-light" loading="eager" decoding="async"><img src="assets/images/logo-dark.png" alt="" class="brand-logo brand-logo-dark" loading="eager" decoding="async" aria-hidden="true"></a><nav class="desktop-nav"><a href="index.html#home">Home</a><a href="about.html">About</a><a href="index.html#how">How It Works</a><a href="index.html#moments">Moments</a><a href="index.html#services">Services</a><a href="index.html#offers">Offers</a><a href="index.html#reviews">Reviews</a><a href="contact.html">Contact</a></nav><div class="header-actions"><a href="#" class="header-call js-call">Call</a><a href="#" class="header-book js-book">Book Now</a></div><button class="menu-toggle" id="menu-toggle" type="button" aria-label="Open menu"><span></span><span></span><span></span></button></div><div class="mobile-panel" id="mobile-panel"><nav class="mobile-nav"><a href="index.html#home">Home</a><a href="about.html">About</a><a href="index.html#how">How It Works</a><a href="index.html#moments">Moments</a><a href="index.html#services">Services</a><a href="index.html#offers">Offers</a><a href="index.html#reviews">Reviews</a><a href="contact.html">Contact</a></nav><div class="mobile-actions"><a href="#" class="soft-btn js-call">Call Now</a><a href="#" class="main-btn js-whatsapp">WhatsApp</a></div></div></header>`;
+<header class="site-header" id="site-header"><div class="shell header-shell"><a href="index.html" class="brand"><img src="assets/images/logo-light.png" alt="BodyNova Beauty Center" class="brand-logo brand-logo-light" loading="eager" decoding="async"><img src="assets/images/logo-dark.png" alt="" class="brand-logo brand-logo-dark" loading="eager" decoding="async" aria-hidden="true"></a><nav class="desktop-nav"><a href="index.html#home">Home</a><a href="about.html">About</a><a href="index.html#how">How It Works</a><a href="index.html#moments">Moments</a><div class="nav-dropdown" data-dropdown><a href="services.html" class="nav-dropdown-trigger" aria-haspopup="true" aria-expanded="false">Services<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></a><div class="nav-dropdown-menu" role="menu"><a href="services.html" class="nav-dropdown-all" role="menuitem">All Services <span aria-hidden="true">→</span></a><a href="service-body-sculpting.html" role="menuitem">Body Sculpting &amp; Fat Removal</a><a href="service-hydra-facial.html" role="menuitem">Hydra Facial</a><a href="service-body-contouring.html" role="menuitem">Body Contouring</a><a href="service-body-slimming.html" role="menuitem">Body Slimming</a><a href="service-skin-tightening.html" role="menuitem">Skin Tightening</a><a href="service-lymphatic-drainage.html" role="menuitem">Lymphatic Drainage</a><a href="service-cellulite-reduction.html" role="menuitem">Cellulite Reduction</a><a href="service-detox-body-wrap.html" role="menuitem">Detox Body Wrap</a></div></div><a href="index.html#offers">Offers</a><a href="index.html#reviews">Reviews</a><a href="contact.html">Contact</a></nav><div class="header-actions"><a href="#" class="header-call js-call">Call</a><a href="#" class="header-book js-book">Book Now</a></div><button class="menu-toggle" id="menu-toggle" type="button" aria-label="Open menu"><span></span><span></span><span></span></button></div><div class="mobile-panel" id="mobile-panel"><nav class="mobile-nav"><a href="index.html#home">Home</a><a href="about.html">About</a><a href="index.html#how">How It Works</a><a href="index.html#moments">Moments</a><div class="mobile-submenu" data-mobile-submenu><button type="button" class="mobile-submenu-toggle" aria-expanded="false"><span>Services</span><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button><div class="mobile-submenu-list"><a href="services.html">All Services</a><a href="service-body-sculpting.html">Body Sculpting &amp; Fat Removal</a><a href="service-hydra-facial.html">Hydra Facial</a><a href="service-body-contouring.html">Body Contouring</a><a href="service-body-slimming.html">Body Slimming</a><a href="service-skin-tightening.html">Skin Tightening</a><a href="service-lymphatic-drainage.html">Lymphatic Drainage</a><a href="service-cellulite-reduction.html">Cellulite Reduction</a><a href="service-detox-body-wrap.html">Detox Body Wrap</a></div></div><a href="index.html#offers">Offers</a><a href="index.html#reviews">Reviews</a><a href="contact.html">Contact</a></nav><div class="mobile-actions"><a href="#" class="soft-btn js-call">Call Now</a><a href="#" class="main-btn js-whatsapp">WhatsApp</a></div></div></header>`;
 
 const FOOTER_FALLBACK = `
-<footer class="footer" id="contact"><div class="shell footer-shell"><div class="footer-topline"><p class="eyebrow">BodyNova Beauty Center</p><div class="footer-topline-actions"><a href="#" class="main-btn js-whatsapp">Book on WhatsApp</a><a href="#" class="soft-btn js-call">Call Now</a></div></div><div class="footer-grid footer-grid-cards"><div class="footer-card footer-intro-card"><h2>Luxury aesthetic care with calm precision.</h2><p>Clinic based beauty and body treatments designed for comfort, confidence, and refined results. Thoughtful care, advanced treatments, and a premium experience.</p><div class="footer-socials"><a href="#" id="footer-instagram">IG</a><a href="#" id="footer-facebook">FB</a><a href="#" id="footer-tiktok">TT</a><a href="#" id="footer-whatsapp">WA</a></div></div><div class="footer-card footer-menu-card"><h4>Menu</h4><div class="footer-link-list"><a href="index.html#home"><span>Home</span><small>01</small></a><a href="about.html"><span>About Us</span><small>02</small></a><a href="index.html#services"><span>Services</span><small>03</small></a><a href="contact.html#contact-faq"><span>FAQs</span><small>04</small></a><a href="contact.html"><span>Contact Us</span><small>05</small></a></div></div><div class="footer-card footer-services-card"><h4>Services</h4><div class="footer-link-list"><a href="#services"><span>Body Sculpting</span></a><a href="#services"><span>Hydra Facial</span></a><a href="#services"><span>Body Contouring</span></a><a href="#services"><span>Body Slimming</span></a><a href="#services"><span>Skin Tightening</span></a><a href="#services"><span>Lymphatic Drainage</span></a></div></div><div class="footer-card footer-contact-card"><h4>Contact</h4><div class="footer-contact-stack"><div class="footer-contact-item"><span class="footer-label">Phone</span><a href="#" id="footer-phone-link"></a></div><div class="footer-contact-item"><span class="footer-label">Email</span><a href="#" id="footer-email-link"></a></div><div class="footer-contact-item"><span class="footer-label">Address</span><span id="footer-address"></span></div></div></div></div><div class="footer-bottom"><p id="footer-copy-text"></p><div class="payment-row"><span>Visa</span><span>Mastercard</span><span>Tabby</span><span>Apple Pay</span></div><div class="footer-bottom-links"><a href="#">Terms</a><a href="#">Privacy</a></div></div></div></footer>`;
+<footer class="footer" id="contact"><div class="shell footer-shell"><div class="footer-topline"><p class="eyebrow">BodyNova Beauty Center</p><div class="footer-topline-actions"><a href="#" class="main-btn js-whatsapp">Book on WhatsApp</a><a href="#" class="soft-btn js-call">Call Now</a></div></div><div class="footer-grid footer-grid-cards"><div class="footer-card footer-intro-card"><h2>Luxury aesthetic care with calm precision.</h2><p>Clinic based beauty and body treatments designed for comfort, confidence, and refined results. Thoughtful care, advanced treatments, and a premium experience.</p><div class="footer-socials"><a href="#" id="footer-instagram">IG</a><a href="#" id="footer-facebook">FB</a><a href="#" id="footer-tiktok">TT</a><a href="#" id="footer-whatsapp">WA</a></div></div><div class="footer-card footer-menu-card"><h4>Menu</h4><div class="footer-link-list"><a href="index.html#home"><span>Home</span><small>01</small></a><a href="about.html"><span>About Us</span><small>02</small></a><a href="index.html#services"><span>Services</span><small>03</small></a><a href="contact.html#contact-faq"><span>FAQs</span><small>04</small></a><a href="contact.html"><span>Contact Us</span><small>05</small></a></div></div><div class="footer-card footer-services-card"><h4>Services</h4><div class="footer-link-list"><a href="services.html"><span>All Services</span></a><a href="service-body-sculpting.html"><span>Body Sculpting</span></a><a href="service-hydra-facial.html"><span>Hydra Facial</span></a><a href="service-body-contouring.html"><span>Body Contouring</span></a><a href="service-body-slimming.html"><span>Body Slimming</span></a><a href="service-skin-tightening.html"><span>Skin Tightening</span></a><a href="service-lymphatic-drainage.html"><span>Lymphatic Drainage</span></a><a href="service-cellulite-reduction.html"><span>Cellulite Reduction</span></a><a href="service-detox-body-wrap.html"><span>Detox Body Wrap</span></a></div></div><div class="footer-card footer-contact-card"><h4>Contact</h4><div class="footer-contact-stack"><div class="footer-contact-item"><span class="footer-label">Phone</span><a href="#" id="footer-phone-link"></a></div><div class="footer-contact-item"><span class="footer-label">Email</span><a href="#" id="footer-email-link"></a></div><div class="footer-contact-item"><span class="footer-label">Address</span><span id="footer-address"></span></div></div></div></div><div class="footer-bottom"><p id="footer-copy-text"></p><div class="payment-row"><span>Visa</span><span>Mastercard</span><span>Tabby</span><span>Apple Pay</span></div><div class="footer-bottom-links"><a href="#">Terms</a><a href="#">Privacy</a></div></div></div></footer>`;
 
 async function loadPartial(selector, url, fallback) {
   const mount = document.querySelector(selector);
@@ -216,6 +216,82 @@ function initSmoothScroll() {
   });
 }
 
+/* Desktop dropdown (Services) — opens on hover and on focus / keyboard
+   activation. Tap on touch devices opens it without navigating. */
+function initNavDropdowns() {
+  const dropdowns = document.querySelectorAll('[data-dropdown]');
+  dropdowns.forEach(dd => {
+    const trigger = dd.querySelector('.nav-dropdown-trigger');
+    if (!trigger) return;
+
+    function setOpen(open) {
+      dd.classList.toggle('is-open', open);
+      trigger.setAttribute('aria-expanded', open ? 'true' : 'false');
+    }
+
+    // Tap-to-open on touch devices: first tap opens, second tap navigates.
+    trigger.addEventListener('click', e => {
+      const isTouch = window.matchMedia('(hover: none)').matches;
+      if (isTouch && !dd.classList.contains('is-open')) {
+        e.preventDefault();
+        setOpen(true);
+      }
+    });
+
+    // Close on outside click.
+    document.addEventListener('click', e => {
+      if (!dd.contains(e.target)) setOpen(false);
+    });
+
+    // Close on Escape.
+    dd.addEventListener('keydown', e => {
+      if (e.key === 'Escape') {
+        setOpen(false);
+        trigger.focus();
+      }
+    });
+  });
+}
+
+/* Mobile submenu inside the burger panel. */
+function initMobileSubmenus() {
+  document.querySelectorAll('[data-mobile-submenu]').forEach(group => {
+    const btn = group.querySelector('.mobile-submenu-toggle');
+    if (!btn) return;
+    btn.addEventListener('click', () => {
+      const open = group.classList.toggle('is-open');
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+  });
+}
+
+/* Generic Service-page booking form -> WhatsApp.
+   Used by every service-detail page and the services hub CTA. */
+function initServiceBookingForm() {
+  const form = document.getElementById('service-booking-form');
+  if (!form || typeof CONFIG === 'undefined') return;
+  form.addEventListener('submit', event => {
+    event.preventDefault();
+    const data = new FormData(form);
+    const name    = (data.get('name')    || '').toString().trim();
+    const phone   = (data.get('phone')   || '').toString().trim();
+    const service = (data.get('service') || '').toString().trim();
+    const date    = (data.get('date')    || '').toString().trim();
+    const message = (data.get('message') || '').toString().trim();
+    if (!name || !phone) { form.reportValidity(); return; }
+    const lines = [
+      'Hi BodyNova, I would like to request an appointment.',
+      `Name: ${name}`,
+      `Phone: ${phone}`,
+    ];
+    if (service) lines.push(`Treatment: ${service}`);
+    if (date)    lines.push(`Preferred date: ${date}`);
+    if (message) lines.push(`Message: ${message}`);
+    const url = `https://wa.me/${CONFIG.whatsappNumber}?text=${encodeURIComponent(lines.join('\n'))}`;
+    window.open(url, '_blank', 'noopener');
+  });
+}
+
 async function init() {
   await Promise.all([
     loadPartial('#header-placeholder', 'header.html', HEADER_FALLBACK),
@@ -231,6 +307,9 @@ async function init() {
   initHeroSlider();
   initTransparentStickyHeader();
   initSmoothScroll();
+  initNavDropdowns();
+  initMobileSubmenus();
+  initServiceBookingForm();
 }
 
 document.addEventListener('DOMContentLoaded', init);
