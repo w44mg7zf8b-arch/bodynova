@@ -13690,3 +13690,173 @@ svg {
     min-height: 66px !important;
   }
 }
+
+/* =========================================================
+   FINAL TWEAKS (May 2026)
+   - Larger logo on desktop and mobile
+   - Mobile hero images fully visible & centered
+   - Portrait "services overview" cards on mobile
+   - Footer social icon styling for SVG icons
+   - Form status messaging
+   These rules sit at the end of the file on purpose so they
+   win over every earlier cascading override.
+   ========================================================= */
+
+/* ---- Logo: bigger on desktop and mobile ---- */
+.brand-logo {
+  height: 72px !important;
+  max-height: 72px !important;
+  max-width: 300px !important;
+  width: auto !important;
+  object-fit: contain !important;
+}
+.header-shell {
+  min-height: 88px !important;
+}
+
+@media (max-width: 1080px) {
+  .brand-logo {
+    height: 68px !important;
+    max-height: 68px !important;
+    max-width: 280px !important;
+  }
+  .header-shell { min-height: 84px !important; }
+  .mobile-panel { top: 84px !important; max-height: calc(100svh - 84px) !important; }
+}
+
+@media (max-width: 980px) {
+  .brand-logo {
+    height: 62px !important;
+    max-height: 62px !important;
+    max-width: 250px !important;
+  }
+  .header-shell { min-height: 80px !important; height: 80px !important; }
+  .mobile-panel { top: 80px !important; max-height: calc(100svh - 80px) !important; }
+}
+
+@media (max-width: 640px) {
+  .brand-logo {
+    height: 56px !important;
+    max-height: 56px !important;
+    max-width: 220px !important;
+  }
+  .header-shell { min-height: 74px !important; height: 74px !important; }
+  .mobile-panel { top: 74px !important; max-height: calc(100svh - 74px) !important; }
+}
+
+@media (max-width: 480px) {
+  .brand-logo {
+    height: 52px !important;
+    max-height: 52px !important;
+    max-width: 200px !important;
+  }
+  .header-shell { min-height: 70px !important; height: 70px !important; }
+  .mobile-panel { top: 70px !important; max-height: calc(100svh - 70px) !important; }
+}
+
+@media (max-width: 360px) {
+  .brand-logo {
+    height: 46px !important;
+    max-height: 46px !important;
+    max-width: 178px !important;
+  }
+  .header-shell { min-height: 66px !important; height: 66px !important; }
+  .mobile-panel { top: 66px !important; max-height: calc(100svh - 66px) !important; }
+}
+
+/* ---- Mobile hero: show whole image, centered ----
+   On phones the hero background was getting cropped on the sides.
+   Switch to `contain` with a complementary brand-tinted background
+   so the full image stays visible and perfectly centered. */
+@media (max-width: 768px) {
+  .hero-slides {
+    background-color: #f4ece2 !important;
+  }
+  .hero-slide,
+  .hero-slide-1,
+  .hero-slide-2,
+  .hero-slide-3 {
+    background-size: contain !important;
+    background-position: center center !important;
+    background-repeat: no-repeat !important;
+    background-color: #f4ece2 !important;
+  }
+}
+
+/* ---- Mobile "services overview" cards: portrait images ----
+   On mobile the "What's New" service cards now use a
+   portrait (3:4) image so faces and bodies look natural. */
+@media (max-width: 768px) {
+  .product-row .product-img,
+  .product-img {
+    height: auto !important;
+    aspect-ratio: 3 / 4 !important;
+    width: 100% !important;
+    background-size: cover !important;
+    background-position: center center !important;
+  }
+}
+
+/* The mini-image cards in the "BodyNova Moments" group also
+   look better as portraits on mobile. */
+@media (max-width: 768px) {
+  .mini-offers .mini-img,
+  .mini-img {
+    height: auto !important;
+    aspect-ratio: 3 / 4 !important;
+    width: 100% !important;
+    background-size: cover !important;
+    background-position: center center !important;
+  }
+}
+
+/* ---- Footer social icons (SVG-based) ---- */
+.footer-socials a {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 42px !important;
+  height: 42px !important;
+  border-radius: 50% !important;
+  border: 1px solid rgba(29, 117, 118, .28) !important;
+  background: #ffffff !important;
+  color: #1d7576 !important;
+  text-decoration: none !important;
+  transition: transform .2s ease, background .2s ease, color .2s ease, border-color .2s ease !important;
+}
+.footer-socials a svg {
+  width: 18px;
+  height: 18px;
+  display: block;
+}
+.footer-socials a:hover {
+  transform: translateY(-2px) !important;
+  background: #1d7576 !important;
+  color: #ffffff !important;
+  border-color: #1d7576 !important;
+}
+
+/* ---- Form status message styling ---- */
+.form-status {
+  margin-top: 14px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  font-size: 14px;
+  line-height: 1.4;
+  font-weight: 500;
+}
+.form-status[data-state="pending"] {
+  background: rgba(29, 117, 118, .08);
+  color: #1d7576;
+  border: 1px solid rgba(29, 117, 118, .2);
+}
+.form-status[data-state="success"] {
+  background: rgba(34, 139, 87, .1);
+  color: #1f6b46;
+  border: 1px solid rgba(34, 139, 87, .25);
+}
+.form-status[data-state="error"] {
+  background: rgba(204, 65, 65, .08);
+  color: #a8392f;
+  border: 1px solid rgba(204, 65, 65, .25);
+}
