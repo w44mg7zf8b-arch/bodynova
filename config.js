@@ -10,6 +10,12 @@ const CONFIG = {
   instagramLink: "#",
   facebookLink: "#",
   tiktokLink: "#",
+  // All website forms (booking, service booking, contact) are submitted to this email.
+  // Powered by https://formsubmit.co — on the very first submission you will receive
+  // a confirmation email from FormSubmit at this address. Click the link in that
+  // email once to activate the endpoint. After that, every form submission will
+  // be delivered straight to your inbox.
+  formsEmail: "bodynova@hucoskills.com",
   aboutShowcaseMediaType: "image",
   aboutShowcaseImage: "assets/images/about-showcase.jpg",
   aboutShowcaseVideo: "assets/videos/about-showcase.mp4",

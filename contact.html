@@ -345,12 +345,27 @@
         if (tt) tt.href = CONFIG.tiktokLink;
       }
 
+      function getFormsEmail () {
+        if (typeof CONFIG !== 'undefined' && CONFIG.formsEmail) return CONFIG.formsEmail;
+        return 'bodynova@hucoskills.com';
+      }
+
+      function showFormStatus (form, type, message) {
+        var status = form.querySelector('.form-status');
+        if (!status) {
+          status = document.createElement('p');
+          status.className = 'form-status';
+          form.appendChild(status);
+        }
+        status.dataset.state = type;
+        status.textContent = message;
+      }
+
       function initContactForm () {
         var form = document.getElementById('contact-form');
         if (!form) return;
         form.addEventListener('submit', function (event) {
           event.preventDefault();
-          if (typeof CONFIG === 'undefined') return;
           var data = new FormData(form);
           var name = (data.get('name') || '').toString().trim();
           var phone = (data.get('phone') || '').toString().trim();
@@ -362,18 +377,38 @@
             form.reportValidity();
             return;
           }
-          var lines = [
-            'Hi BodyNova, I want to get in touch.',
-            'Name: ' + name,
-            'Phone: ' + phone
-          ];
-          if (email) lines.push('Email: ' + email);
-          if (service) lines.push('Treatment: ' + service);
-          if (prefer) lines.push('Preferred contact: ' + prefer);
-          lines.push('Message: ' + message);
-          var text = encodeURIComponent(lines.join('\n'));
-          var url = 'https://wa.me/' + CONFIG.whatsappNumber + '?text=' + text;
-          window.open(url, '_blank', 'noopener');
+          var payload = {
+            name: name,
+            phone: phone,
+            message: message,
+            _subject: 'New contact message — BodyNova website',
+            _template: 'table',
+            _captcha: 'false'
+          };
+          if (email)   payload.email = email;
+          if (service) payload.service = service;
+          if (prefer)  payload.preferred_contact = prefer;
+
+          var submitBtn = form.querySelector('button[type="submit"]');
+          var originalLabel = submitBtn ? submitBtn.textContent : '';
+          if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Sending…'; }
+          showFormStatus(form, 'pending', 'Sending your message…');
+
+          fetch('https://formsubmit.co/ajax/' + encodeURIComponent(getFormsEmail()), {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+            body: JSON.stringify(payload)
+          }).then(function (res) {
+            if (!res.ok) throw new Error('failed');
+            return res.json().catch(function () { return {}; });
+          }).then(function () {
+            showFormStatus(form, 'success', 'Thank you! Your message has been sent. Our clinic team will reply soon.');
+            form.reset();
+          }).catch(function () {
+            showFormStatus(form, 'error', 'Could not send via email right now. Please try again or use WhatsApp.');
+          }).finally(function () {
+            if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = originalLabel; }
+          });
         });
       }
 
